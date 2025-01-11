@@ -11,15 +11,16 @@ import InputGroup from "react-bootstrap/InputGroup";
 
 const BillForm = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [currency, setCurrency] = useState("$");
+  const [currency, setCurrency] = useState("₹");
   const [currentDate] = useState(new Date().toLocaleDateString());
+  const [currentTime] = useState(new Date().toLocaleTimeString());
   const [invoiceNumber, setInvoiceNumber] = useState(1);
-  const [dateOfIssue, setDateOfIssue] = useState("");
+  // const [dateOfIssue, setDateOfIssue] = useState("");
   const [billTo, setBillTo] = useState("");
-  const [billToEmail, setBillToEmail] = useState("");
+  const [billToNumber, setBillToNumber] = useState("");
   const [billToAddress, setBillToAddress] = useState("");
   const [billFrom, setBillFrom] = useState("");
-  const [billFromEmail, setBillFromEmail] = useState("");
+  const [billFromNumber, setBillFromNumber] = useState("");
   const [billFromAddress, setBillFromAddress] = useState("");
   const [notes, setNotes] = useState(
     "Thank you for doing business with us. Have a great day!"
@@ -36,8 +37,8 @@ const BillForm = () => {
       id: (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
       name: "",
       description: "",
-      price: "1.00",
-      quantity: 1,
+      price: "0.00",
+      quantity: 0,
     },
   ]);
 
@@ -76,9 +77,9 @@ const BillForm = () => {
     const newItem = {
       id,
       name: "",
-      price: "1.00",
+      price: "0.00",
       description: "",
-      quantity: 1,
+      quantity: 0,
     };
     setItems([...items, newItem]);
   };
@@ -109,6 +110,26 @@ const BillForm = () => {
     setIsOpen(false);
   };
 
+  function CurrentTime() {
+    const [currentTime, setCurrentTime] = useState(new Date());
+
+    useEffect(() => {
+      const intervalId = setInterval(() => {
+        setCurrentTime(new Date());
+      }, 1000);
+  
+      return () => clearInterval(intervalId);
+    }, []);
+  
+    const formattedTime = Form(currentTime, 'hh:mm:ss a'); // Example format: 03:45:22 PM
+  
+    return (
+      <div>
+        Current Time: {formattedTime}
+      </div>
+    );
+  }
+
   return (
     <Form onSubmit={openModal}>
       <Row>
@@ -120,9 +141,12 @@ const BillForm = () => {
                   <div className="mb-2">
                     <span className="fw-bold">Current&nbsp;Date:&nbsp;</span>
                     <span className="current-date">{currentDate}</span>
+                    <p></p>
+                    <span className="fw-bold">Current&nbsp;Time:&nbsp;</span>
+                    <span className="current-time">{currentTime}</span>
                   </div>
                 </div>
-                <div className="d-flex flex-row align-items-center">
+                {/* <div className="d-flex flex-row align-items-center">
                   <span className="fw-bold d-block me-2">Due&nbsp;Date:</span>
                   <Form.Control
                     type="date"
@@ -132,7 +156,7 @@ const BillForm = () => {
                     style={{ maxWidth: "150px" }}
                     required
                   />
-                </div>
+                </div> */}
               </div>
               <div className="d-flex flex-row align-items-center">
                 <span className="fw-bold me-2">Invoice&nbsp;Number:&nbsp;</span>
@@ -163,14 +187,16 @@ const BillForm = () => {
                   required
                 />
                 <Form.Control
-                  placeholder="Email address"
-                  value={billFromEmail}
-                  type="email"
-                  name="billFromEmail"
+                  placeholder="Mobile Number"
+                  value={billFromNumber}
+                  type="tel" // Correct type
+                  name="billFromNumber"
                   className="my-2"
-                  onChange={handleChange(setBillFromEmail)}
-                  autoComplete="email"
+                  onChange={handleChange(setBillFromNumber)}
+                  autoComplete="tel" // Correct autocomplete
                   required
+                  pattern="[0-9]{10}" // Example validation (10 digits)
+                  title="Please enter a 10-digit mobile number"
                 />
                 <Form.Control
                   placeholder="Billing address"
@@ -197,14 +223,16 @@ const BillForm = () => {
                   required
                 />
                 <Form.Control
-                  placeholder="Email address"
-                  value={billToEmail}
-                  type="email"
-                  name="billToEmail"
+                  placeholder="Mobile Number"
+                  value={billToNumber}
+                  type="tel" // Correct type
+                  name="billToNumber"
                   className="my-2"
-                  onChange={handleChange(setBillToEmail)}
-                  autoComplete="email"
+                  onChange={handleChange(setBillToNumber)}
+                  autoComplete="tel" // Correct autocomplete
                   required
+                  pattern="[0-9]{10}" // Example validation (10 digits)
+                  title="Please enter a 10-digit mobile number"
                 />
                 <Form.Control
                   placeholder="Billing address"
@@ -282,13 +310,14 @@ const BillForm = () => {
               showModal={isOpen}
               closeModal={closeModal}
               info={{
-                dateOfIssue,
+                currentDate,
+                currentTime,
                 invoiceNumber,
                 billTo,
-                billToEmail,
+                billToNumber,
                 billToAddress,
                 billFrom,
-                billFromEmail,
+                billFromNumber,
                 billFromAddress,
                 notes,
               }}
@@ -300,7 +329,7 @@ const BillForm = () => {
               total={total}
             />
 
-            <Form.Group className="mb-3">
+            {/* <Form.Group className="mb-3">
               <Form.Label className="fw-bold">Currency:</Form.Label>
               <Form.Select
                 onChange={(e) => {
@@ -309,9 +338,9 @@ const BillForm = () => {
                 className="btn btn-light my-1"
                 aria-label="Change Currency"
               >
+                <option value="₹">INR (Indian Rupee)</option>
                 <option value="$">USD (United States Dollar)</option>
                 <option value="£">GBP (British Pound Sterling)</option>
-                <option value="₹">INR (Indian Rupee)</option>
                 <option value="¥">JPY (Japanese Yen)</option>
                 <option value="$">CAD (Canadian Dollar)</option>
                 <option value="$">AUD (Australian Dollar)</option>
@@ -319,7 +348,9 @@ const BillForm = () => {
                 <option value="¥">CNY (Chinese Renminbi)</option>
                 <option value="₿">BTC (Bitcoin)</option>
               </Form.Select>
-            </Form.Group>
+            </Form.Group> */}
+
+
             <Form.Group className="my-3">
               <Form.Label className="fw-bold">Tax rate:</Form.Label>
               <InputGroup className="my-1 flex-nowrap">

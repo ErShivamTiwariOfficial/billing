@@ -60,7 +60,7 @@ const ItemRow = ({ item, onItemizedItemEdit, onDelEvent, currency }) => {
             id: item.id,
           }}
         />
-        <EditableField
+        {/* <EditableField
           onItemizedItemEdit={onItemizedItemEdit}
           cellData={{
             type: "text",
@@ -69,7 +69,7 @@ const ItemRow = ({ item, onItemizedItemEdit, onDelEvent, currency }) => {
             value: item.description,
             id: item.id,
           }}
-        />
+        /> */}
       </td>
       <td style={{ minWidth: "70px" }}>
         <EditableField
