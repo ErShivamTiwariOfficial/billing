@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from 'react'; 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -44,7 +44,7 @@ const BillLook = ({
           <div className="d-flex flex-row justify-content-between align-items-start bg-light w-100 p-4">
             <div className="w-100">
               <h4 className="fw-bold my-2">
-                {info.billFrom || "John Uberbacher"}
+                {info.billFrom || "E-Billing"}
               </h4>
               <h6 className="fw-bold text-secondary mb-1">
                 Invoice Number: {info.invoiceNumber || ""}
@@ -64,17 +64,19 @@ const BillLook = ({
                 <div className="fw-bold">Billed From:</div>
                 <div>{info.billFrom || ""}</div>
                 <div>{info.billFromAddress || ""}</div>
-                <div>{info.billFromEmail || ""}</div>
+                <div>{info.billFromNumber || ""}</div>
               </Col>
               <Col md={4}>
                 <div className="fw-bold">Billed to:</div>
                 <div>{info.billTo || ""}</div>
                 <div>{info.billToAddress || ""}</div>
-                <div>{info.billToEmail || ""}</div>
+                <div>{info.billToNumber || ""}</div>
               </Col>
               <Col md={4}>
                 <div className="fw-bold mt-2">Date Of Issue:</div>
-                <div>{info.dateOfIssue || ""}</div>
+                <div>{info.currentDate || ""}</div>
+                <div className="fw-bold mt-2">Time Of Issue:</div>
+                <div>{info.currentTime || ""}</div>
               </Col>
             </Row>
             <Table className="mb-0">
