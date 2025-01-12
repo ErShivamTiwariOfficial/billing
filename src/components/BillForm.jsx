@@ -27,8 +27,8 @@ const BillForm = () => {
   );
   const [total, setTotal] = useState("0.00");
   const [subTotal, setSubTotal] = useState("0.00");
-  const [taxRate, setTaxRate] = useState("");
-  const [taxAmount, setTaxAmount] = useState("0.00");
+  const [gstRate, setGstRate] = useState("");
+  const [gstAmount, setGstAmount] = useState("0.00");
   const [discountRate, setDiscountRate] = useState("");
   const [discountAmount, setDiscountAmount] = useState("0.00");
 
@@ -45,23 +45,23 @@ const BillForm = () => {
   const handleCalculateTotal = useCallback(() => {
     let newSubTotal = items
       .reduce((acc, item) => {
-        return acc + parseFloat(item.price) * parseInt(item.quantity);
+        return acc + parseFloat(item.price) * parseFloat(item.quantity);
       }, 0)
       .toFixed(2);
 
-    let newtaxAmount = (newSubTotal * (taxRate / 100)).toFixed(2);
+    let newgstAmount = (newSubTotal * (gstRate / 100)).toFixed(2);
     let newdiscountAmount = (newSubTotal * (discountRate / 100)).toFixed(2);
     let newTotal = (
       newSubTotal -
       newdiscountAmount +
-      parseFloat(newtaxAmount)
+      parseFloat(newgstAmount)
     ).toFixed(2);
 
     setSubTotal(newSubTotal);
-    setTaxAmount(newtaxAmount);
+    setGstAmount(newgstAmount);
     setDiscountAmount(newdiscountAmount);
     setTotal(newTotal);
-  }, [items, taxRate, discountRate]);
+  }, [items, gstRate, discountRate]);
 
   useEffect(() => {
     handleCalculateTotal();
@@ -271,11 +271,11 @@ const BillForm = () => {
                   </span>
                 </div>
                 <div className="d-flex flex-row align-items-start justify-content-between mt-2">
-                  <span className="fw-bold">Tax:</span>
+                  <span className="fw-bold">GST:</span>
                   <span>
-                    <span className="small ">({taxRate || 0}%)</span>
+                    <span className="small ">({gstRate || 0}%)</span>
                     {currency}
-                    {taxAmount || 0}
+                    {gstAmount || 0}
                   </span>
                 </div>
                 <hr />
@@ -324,7 +324,7 @@ const BillForm = () => {
               items={items}
               currency={currency}
               subTotal={subTotal}
-              taxAmount={taxAmount}
+              gstAmount={gstAmount}
               discountAmount={discountAmount}
               total={total}
             />
@@ -352,13 +352,13 @@ const BillForm = () => {
 
 
             <Form.Group className="my-3">
-              <Form.Label className="fw-bold">Tax rate:</Form.Label>
+              <Form.Label className="fw-bold">GST:</Form.Label>
               <InputGroup className="my-1 flex-nowrap">
                 <Form.Control
-                  name="taxRate"
-                  type="number"
-                  value={taxRate}
-                  onChange={handleChange(setTaxRate)}
+                  name="gstRate"
+                  type="text"
+                  value={gstRate}
+                  onChange={handleChange(setGstRate)}
                   className="bg-white border"
                   placeholder="0.0"
                   min="0.00"
@@ -375,7 +375,7 @@ const BillForm = () => {
               <InputGroup className="my-1 flex-nowrap">
                 <Form.Control
                   name="discountRate"
-                  type="number"
+                  type="text"
                   value={discountRate}
                   onChange={handleChange(setDiscountRate)}
                   className="bg-white border"

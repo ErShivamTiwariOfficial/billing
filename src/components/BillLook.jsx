@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; 
+import React from 'react'; 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -33,7 +33,7 @@ const BillLook = ({
   currency,
   total,
   items,
-  taxAmount,
+  gstAmount,
   discountAmount,
   subTotal,
 }) => {
@@ -82,7 +82,7 @@ const BillLook = ({
             <Table className="mb-0">
               <thead>
                 <tr>
-                  <th>QTY</th>
+                  <th>QTY KG/Pic</th>
                   <th>DESCRIPTION</th>
                   <th className="text-end">PRICE</th>
                   <th className="text-end">AMOUNT</th>
@@ -123,14 +123,14 @@ const BillLook = ({
                     {currency} {subTotal}
                   </td>
                 </tr>
-                {taxAmount !== 0.0 && (
+                {gstAmount !== 0.0 && (
                   <tr className="text-end">
                     <td></td>
                     <td className="fw-bold" style={{ width: "100px" }}>
-                      TAX
+                      GST
                     </td>
                     <td className="text-end" style={{ width: "100px" }}>
-                      {currency} {taxAmount}
+                      {currency} {gstAmount}
                     </td>
                   </tr>
                 )}

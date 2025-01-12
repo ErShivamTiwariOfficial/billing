@@ -75,7 +75,7 @@ const ItemRow = ({ item, onItemizedItemEdit, onDelEvent, currency }) => {
         <EditableField
           onItemizedItemEdit={onItemizedItemEdit}
           cellData={{
-            type: "number",
+            type: "text",
             name: "quantity",
             min: 1,
             step: "1",
@@ -89,7 +89,7 @@ const ItemRow = ({ item, onItemizedItemEdit, onDelEvent, currency }) => {
           onItemizedItemEdit={onItemizedItemEdit}
           cellData={{
             leading: currency,
-            type: "number",
+            type: "text",
             name: "price",
             min: 1,
             step: "0.01",
