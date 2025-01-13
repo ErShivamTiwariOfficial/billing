@@ -39,7 +39,7 @@ html,
   box-shadow: 0 .1rem .1rem rgba(0,0,0,.05)!important
 }
 .btn:hover {
-  border-color:solid, 1px, black;
+  border-color:solid, 1px, rgb(234, 227, 227);
   background-color: green
 }
 

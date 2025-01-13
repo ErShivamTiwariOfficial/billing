@@ -11,7 +11,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 
 const BillForm = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [currency, setCurrency] = useState("₹");
+  const [currency] = useState("₹");
   const [currentDate] = useState(new Date().toLocaleDateString());
   const [currentTime] = useState(new Date().toLocaleTimeString());
   const [invoiceNumber, setInvoiceNumber] = useState(1);
@@ -25,20 +25,20 @@ const BillForm = () => {
   const [notes, setNotes] = useState(
     "Thank you for doing business with us. Have a great day!"
   );
-  const [total, setTotal] = useState("0.00");
-  const [subTotal, setSubTotal] = useState("0.00");
+  const [total, setTotal] = useState("0");
+  const [subTotal, setSubTotal] = useState("0");
   const [gstRate, setGstRate] = useState("");
-  const [gstAmount, setGstAmount] = useState("0.00");
-  const [discountRate, setDiscountRate] = useState("");
-  const [discountAmount, setDiscountAmount] = useState("0.00");
+  const [gstAmount, setGstAmount] = useState("0");
+  const [discountRate, setDiscountRate] = useState("0");
+  const [discountAmount, setDiscountAmount] = useState("0");
 
   const [items, setItems] = useState([
     {
       id: (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
       name: "",
       description: "",
-      price: "0.00",
-      quantity: 0,
+      price: "",
+      quantity: "",
     },
   ]);
 
@@ -77,7 +77,7 @@ const BillForm = () => {
     const newItem = {
       id,
       name: "",
-      price: "0.00",
+      price: "0",
       description: "",
       quantity: 0,
     };
@@ -108,9 +108,7 @@ const BillForm = () => {
 
   const closeModal = () => {
     setIsOpen(false);
-  };
-
-  function CurrentTime() {
+  };  function CurrentTime() {
     const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {
@@ -161,7 +159,7 @@ const BillForm = () => {
               <div className="d-flex flex-row align-items-center">
                 <span className="fw-bold me-2">Invoice&nbsp;Number:&nbsp;</span>
                 <Form.Control
-                  type="number"
+                  type="text"
                   value={invoiceNumber}
                   name="invoiceNumber"
                   onChange={handleChange(setInvoiceNumber)}
@@ -176,7 +174,7 @@ const BillForm = () => {
               <Col>
                 <Form.Label className="fw-bold">Bill from:</Form.Label>
                 <Form.Control
-                  placeholder="Who is this invoice from?"
+                  placeholder="Shop Name"
                   rows={3}
                   value={billFrom}
                   type="text"
@@ -186,20 +184,8 @@ const BillForm = () => {
                   autoComplete="name"
                   required
                 />
-                <Form.Control
-                  placeholder="Mobile Number"
-                  value={billFromNumber}
-                  type="tel" // Correct type
-                  name="billFromNumber"
-                  className="my-2"
-                  onChange={handleChange(setBillFromNumber)}
-                  autoComplete="tel" // Correct autocomplete
-                  required
-                  pattern="[0-9]{10}" // Example validation (10 digits)
-                  title="Please enter a 10-digit mobile number"
-                />
-                <Form.Control
-                  placeholder="Billing address"
+                  <Form.Control
+                  placeholder="Shop Address"
                   value={billFromAddress}
                   type="text"
                   name="billFromAddress"
@@ -208,11 +194,23 @@ const BillForm = () => {
                   onChange={handleChange(setBillFromAddress)}
                   required
                 />
+                <Form.Control
+                  placeholder="Mobile Number"
+                  value={billFromNumber}
+                  type="text" // Correct type
+                  name="billFromNumber"
+                  className="my-2"
+                  onChange={handleChange(setBillFromNumber)}
+                  autoComplete="tel" // Correct autocomplete
+                  required
+                  // pattern="[0-9]{10}" // Example validation (10 digits)
+                  // title="Please enter a 10-digit mobile number"
+                />
               </Col>
               <Col>
                 <Form.Label className="fw-bold">Bill to:</Form.Label>
                 <Form.Control
-                  placeholder="Who is this invoice to?"
+                  placeholder="Costumer Name"
                   rows={3}
                   value={billTo}
                   type="text"
@@ -222,20 +220,8 @@ const BillForm = () => {
                   autoComplete="name"
                   required
                 />
-                <Form.Control
-                  placeholder="Mobile Number"
-                  value={billToNumber}
-                  type="tel" // Correct type
-                  name="billToNumber"
-                  className="my-2"
-                  onChange={handleChange(setBillToNumber)}
-                  autoComplete="tel" // Correct autocomplete
-                  required
-                  pattern="[0-9]{10}" // Example validation (10 digits)
-                  title="Please enter a 10-digit mobile number"
-                />
-                <Form.Control
-                  placeholder="Billing address"
+                 <Form.Control
+                  placeholder="Costumer Address"
                   value={billToAddress}
                   type="text"
                   name="billToAddress"
@@ -243,6 +229,18 @@ const BillForm = () => {
                   autoComplete="address"
                   onChange={handleChange(setBillToAddress)}
                   required
+                />
+                <Form.Control
+                  placeholder="Mobile Number"
+                  value={billToNumber}
+                  type="text" // Correct type
+                  name="billToNumber"
+                  className="my-2"
+                  onChange={handleChange(setBillToNumber)}
+                  autoComplete="tel" // Correct autocomplete
+                  required
+                  // pattern="[0-9]{10}" // Example validation (10 digits)
+                  // title="Please enter a 10-digit mobile number"
                 />
               </Col>
             </Row>
@@ -300,7 +298,7 @@ const BillForm = () => {
               onChange={handleChange(setNotes)}
               as="textarea"
               className="my-2"
-              rows={1}
+              rows={5}
             />
           </Card>
         </Col>
@@ -371,7 +369,7 @@ const BillForm = () => {
               </InputGroup>
             </Form.Group>
             <Form.Group className="my-3">
-              <Form.Label className="fw-bold">Discount rate:</Form.Label>
+              <Form.Label className="fw-bold">Discount Rate:</Form.Label>
               <InputGroup className="my-1 flex-nowrap">
                 <Form.Control
                   name="discountRate"
