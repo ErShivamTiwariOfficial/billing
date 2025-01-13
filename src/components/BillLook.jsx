@@ -59,7 +59,7 @@ const BillLook = ({
             </div>
           </div>
           <div className="p-4">
-            <Row className="mb-4">
+            <Row className="mb-4" >
               <Col md={4}>
                 <div className="fw-bold">Billed From:</div>
                 <div>{info.billFrom || ""}</div>
@@ -82,8 +82,8 @@ const BillLook = ({
             <Table className="mb-0">
               <thead>
                 <tr>
-                  <th>QTY KG/Pic</th>
-                  <th>DESCRIPTION</th>
+                  <th>QTY </th>
+                  <th>ITEM</th>
                   <th className="text-end">PRICE</th>
                   <th className="text-end">AMOUNT</th>
                 </tr>
@@ -94,7 +94,7 @@ const BillLook = ({
                     <tr id={i} key={i}>
                       <td style={{ width: "70px" }}>{item.quantity}</td>
                       <td>
-                        {item.name} - {item.description}
+                        {item.name}  {item.description}
                       </td>
                       <td className="text-end" style={{ width: "100px" }}>
                         {currency} {item.price}
@@ -148,7 +148,7 @@ const BillLook = ({
                 <tr className="text-end">
                   <td></td>
                   <td className="fw-bold" style={{ width: "100px" }}>
-                    TOTAL
+                    TOTAL AMOUNT
                   </td>
                   <td className="text-end" style={{ width: "100px" }}>
                     {currency} {total}

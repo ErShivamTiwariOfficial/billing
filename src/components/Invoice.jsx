@@ -49,7 +49,7 @@ const ItemRow = ({ item, onItemizedItemEdit, onDelEvent, currency }) => {
 
   return (
     <tr>
-      <td style={{ width: "100%" }}>
+      <td style={{ width: "50%" }}>
         <EditableField
           onItemizedItemEdit={onItemizedItemEdit}
           cellData={{
@@ -71,12 +71,13 @@ const ItemRow = ({ item, onItemizedItemEdit, onDelEvent, currency }) => {
           }}
         /> */}
       </td>
-      <td style={{ minWidth: "70px" }}>
+      <td style={{ minWidth: "100px" }}>
         <EditableField
           onItemizedItemEdit={onItemizedItemEdit}
           cellData={{
             type: "text",
             name: "quantity",
+            placeholder: "0",
             min: 1,
             step: "1",
             value: item.quantity,
@@ -84,12 +85,13 @@ const ItemRow = ({ item, onItemizedItemEdit, onDelEvent, currency }) => {
           }}
         />
       </td>
-      <td style={{ minWidth: "130px" }}>
+      <td style={{ minWidth: "100px" }}>
         <EditableField
           onItemizedItemEdit={onItemizedItemEdit}
           cellData={{
             leading: currency,
             type: "text",
+            placeholder: "0",
             name: "price",
             min: 1,
             step: "0.01",
