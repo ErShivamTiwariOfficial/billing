@@ -5,7 +5,7 @@ import BillForm from "./components/BillForm";
 
 // Expiration logic
 function App() {
-  const expirationDate = new Date('2025-01-14'); // Set this to 1 year from now
+  const expirationDate = new Date('2025-01-27'); // Set this to 1 year from now
   const currentDate = new Date();
 
   if (currentDate > expirationDate) {
